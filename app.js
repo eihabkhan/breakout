@@ -146,10 +146,17 @@ function drawScore() {
                 ) {
                     ball.dy *= -1;
                     brick.visible = false
+                    increaseScore();
                 }
             }
         })
     })
+
+    // Bottom Wall Detection
+    if (ball.y + ball.size > canvas.height) {
+        showAllBricks();
+        score = 0
+    }
  }
 
 function update() {
@@ -172,6 +179,19 @@ function keyUp(e) {
     if (e.key === "Right" || e.key === "ArrowRight" || e.key === "Left" || e.key === "ArrowLeft") {
         paddle.dx = 0
         }
+}
+
+function increaseScore() {
+    score += 1;
+    if (score % (brickRowCount * brickColumnCount) === 0) {
+        showAllBricks();
+    }
+}
+
+function showAllBricks() {
+    bricks.forEach(column => {
+        column.forEach(brick => brick.visible = true)
+    })
 }
 
 update();
